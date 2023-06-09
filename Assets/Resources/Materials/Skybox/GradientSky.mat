@@ -44,7 +44,7 @@ Material:
     - _Step: 0.2
     - _StepRamp: 20
     m_Colors:
-    - _BotColor: {r: 0.70980394, g: 0.34901962, b: 0.27058825, a: 1}
+    - _BotColor: {r: 0.078431375, g: 0.13725491, b: 0.22745098, a: 1}
     - _Color: {r: 0.772549, g: 0.8, b: 0.7215686, a: 1}
     - _TopColor: {r: 0.078431375, g: 0.13725491, b: 0.22745098, a: 1}
   m_BuildTextureStacks: []
