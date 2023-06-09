@@ -16,13 +16,11 @@ namespace Penwyn.TheSun
 
         //Output
         public float SunAngle;
+        public float AzimuthAngle;
         public float DeclinationAngle;
         public float ZenithAngle { get => 90 - SunAngle; }
         public float ShadowLength;
 
-        public SunData()
-        {
-
-        }
+        public SunData() { }
     }
 }
