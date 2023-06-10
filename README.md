@@ -1,7 +1,7 @@
 # TheSun
  This program involves taking user input and implementing the position of the sun based on the user's current location, date, and time.
 ## The Features
-1. Input Latitude, Longitude, Date then Press [Calcualte](#) to get the output data.
+1. Input Latitude, Longitude, Date then Press [Calculate](#) to get the output data.
 2. Press [Random](#) to generate and calculate a random Sun Data.
 3. Press [Day Cicle](#) to simulate the Sun's position from 0am to 11pm in the same input date. 
 
@@ -23,6 +23,7 @@ To download the program, access [itch](https://penwyn.itch.io/the-sun), scroll d
 3. **Shadow Length**: L = ObjectLength / tan(α).
 ![Shadow Length](Assets/Resources/Textures/ShadowLength.png)
 
+[Reference](https://www.omnicalculator.com/physics/sun-angle)
 ## The Calculations
 Please check **SunData.cs** if you want to see the full code, calculations.
 
@@ -30,7 +31,7 @@ First of all we need to calculate the **Declination** of the sun using **DateSin
 
 ![Declination](Assets/Resources/Textures/Declination.png)
 
-Second, we need to get the Hour Angle(HRA). It is calculated using [This Guide](https://www.pveducation.org/pvcdrom/properties-of-sunlight/solar-time#HRA)
+Second, we need to get the **Hour Angle (HRA)**. It is calculated using [This Guide](https://www.pveducation.org/pvcdrom/properties-of-sunlight/solar-time#HRA)
 
 
 Next, calculate the **Sun's Elevation Angle** using **Latitude**, **Declination** and **HRA**.
