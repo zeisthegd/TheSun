@@ -7,7 +7,7 @@
 
 
 ## The Installation
-To download the program, access [itch](https://penwyn.itch.io/the-sun), scroll down and find the Download Now button. Then, download the program files, extract, and run the program.
+To download the program, please access [itch](https://penwyn.itch.io/the-sun), scroll down and find the Download Now button. Then, download the program files, extract, and run the program.
 
 ## The Input And Output
 ### The Input
