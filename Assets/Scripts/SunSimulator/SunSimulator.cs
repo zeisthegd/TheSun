@@ -47,13 +47,6 @@ namespace Penwyn.TheSun
             DrawDebugRays();
         }
 
-
-        public void CalculateSunData()
-        {
-            SunData.ComputeOutputData();
-            UpdateOutput();
-            MoveSunToAngle();
-        }
         [ContextMenu("GetDataAndCalculate")]
         public void GetDataAndCalculate()
         {
@@ -70,6 +63,13 @@ namespace Penwyn.TheSun
             {
                 Debug.LogError("Missing Input Field(s). Please Assign In Inspector!");
             }
+        }
+
+        public void CalculateSunData()
+        {
+            SunData.ComputeOutputData();
+            UpdateOutput();
+            MoveSunToAngle();
         }
 
         private void GetInputDataFromUI()

@@ -40,12 +40,12 @@ namespace Penwyn.TheSun
         {
             float radianLat = Latitude * Mathf.Deg2Rad;
             float declination = DeclinationAngle * Mathf.Deg2Rad;
-            float localHourRad = LocalHour() * Mathf.Deg2Rad;
-            return Mathf.Asin((Mathf.Sin(declination) * Mathf.Sin(radianLat)) + (Mathf.Cos(declination) * Mathf.Cos(radianLat) * Mathf.Cos(localHourRad))) * Mathf.Rad2Deg;
+            float hourAngleRad = HourAngle() * Mathf.Deg2Rad;
+            return Mathf.Asin((Mathf.Sin(declination) * Mathf.Sin(radianLat)) + (Mathf.Cos(declination) * Mathf.Cos(radianLat) * Mathf.Cos(hourAngleRad))) * Mathf.Rad2Deg;
         }
 
         /// <summary>
-        /// Calculate the DeclinationAngle of the Sun.
+        /// Calculate the DeclinationAngle of the Sun. Result is in degree.
         /// </summary>
         /// <returns>Declination in Degrees.</returns>
         private float GetDeclinationAngle()
@@ -53,23 +53,26 @@ namespace Penwyn.TheSun
             return -23.44f * Mathf.Cos(Mathf.Deg2Rad * (360f / 365f) * (float)(Date.DateSinceYearStart() + (10f / 24f) + 10));
         }
 
+        /// <summary>
+        /// Calculate the sun's azimuth angle. Result is in degree.
+        /// </summary>
         private float GetAzimuthAngle()
         {
             float radianLat = Latitude * Mathf.Deg2Rad;
             float declination = DeclinationAngle * Mathf.Deg2Rad;
-            float localHourRad = LocalHour() * Mathf.Deg2Rad;
+            float hourAngleRad = HourAngle() * Mathf.Deg2Rad;
             float elevation = SunElevationAngle * Mathf.Deg2Rad;
 
-            float azimuthAngle = Mathf.Acos(Mathf.Clamp((Mathf.Sin(declination) * Mathf.Cos(radianLat) - Mathf.Cos(declination) * Mathf.Sin(radianLat) * Mathf.Cos(localHourRad)) / Mathf.Cos(elevation), -1, 1)) * Mathf.Rad2Deg;
-            return localHourRad < 0 ? azimuthAngle : 360 - azimuthAngle;
+            float azimuthAngle = Mathf.Acos(Mathf.Clamp((Mathf.Sin(declination) * Mathf.Cos(radianLat) - Mathf.Cos(declination) * Mathf.Sin(radianLat) * Mathf.Cos(hourAngleRad)) / Mathf.Cos(elevation), -1, 1)) * Mathf.Rad2Deg;
+            return hourAngleRad < 0 ? azimuthAngle : 360 - azimuthAngle;
         }
 
         #region Date Utility
 
         /// <summary>
-        /// Input UTC zero time.
+        /// Calculate the HRA using Longitude and Date.  Result is in degree.
         /// </summary>
-        private float LocalHour()
+        private float HourAngle()
         {
             float b = (360f / 365f) * ((float)Date.DateSinceYearStart() - 81f) * Mathf.Deg2Rad;
             float equationOfTime = 9.87f * Mathf.Sin(2 * b) - 7.53f * Mathf.Cos(b) - 1.5F * Mathf.Sin(b);
