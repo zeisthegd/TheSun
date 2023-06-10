@@ -16,7 +16,9 @@ To download the program, access [itch](https://penwyn.itch.io/the-sun), scroll d
     Time Zone Different From UTC.
 ### The Output
 1. **Sun Elevation Angle (α)**: Measures the Sun's height relative to the horizon line. For example, if the Sun is at zenith, this Angle will be 90 degrees.
+
 ![Sun Angle And Azimuth](Assets/Resources/Textures/SunAngle.png)
+
 2. **Azimuth Angle(β)**: Tells you how much you should turn clockwise to look directly at the Sun.
 3. **Shadow Length**: L = ObjectLength / tan(α).
 ![Shadow Length](Assets/Resources/Textures/ShadowLength.png)
@@ -24,10 +26,11 @@ To download the program, access [itch](https://penwyn.itch.io/the-sun), scroll d
 ## The Calculations
 Please check **SunData.cs** if you want to see the full code, calculations.
 
-First of all we need to calculate the **Declination** of the sun using **Latitude**.
+First of all we need to calculate the **Declination** of the sun using **DateSinceYearStart(N)**.
 
 ![Declination](Assets/Resources/Textures/Declination.png)
-Second, But first we need to get the Hour Angle. It is calculated using [This Guide](https://www.pveducation.org/pvcdrom/properties-of-sunlight/solar-time#HRA)
+
+Second, we need to get the Hour Angle(HRA). It is calculated using [This Guide](https://www.pveducation.org/pvcdrom/properties-of-sunlight/solar-time#HRA)
 
 
 Next, calculate the **Sun's Elevation Angle** using **Latitude**, **Declination** and **HRA**.
@@ -46,7 +49,7 @@ public float GetShadowLength()
 }
 ```
 
-Finally, when the use press the [Calcualte](#) button, the program calls the calculation and visualization functions in the **SunSimulator.cs** script.
+Finally, when the user press the [Calcualte](#) button, the program calls the calculation and visualization functions in the **SunSimulator.cs** script.
 ```C#
     ...
     if (AllInputFieldsArePresent())
@@ -61,7 +64,18 @@ Finally, when the use press the [Calcualte](#) button, the program calls the cal
 ```
 ## The Visualization
 After getting all of the output from calculations, the sun object will be moved to a simulated position and it's transform.forward will be set to the direction to the human object (pillar).
+```C#
+public void SimulateSunPosition()
+{
+       Vector3 sunPos = Quaternion.AngleAxis(SunData.SunElevationAngle, Vector3.forward) * Vector3.right * SunObjectDistance;
+       Vector2 positionOnPlane = new Vector2(Mathf.Sin(SunData.AzimuthAngle * Mathf.Deg2Rad), Mathf.Cos(SunData.AzimuthAngle * Mathf.Deg2Rad)).normalized * SunObjectDistance;
+       sunPos.x = ObserverObject.transform.position.x + positionOnPlane.x;
+       sunPos.z = ObserverObject.transform.position.z + positionOnPlane.y;
 
+       this.transform.position = sunPos;
+       this.transform.forward = (GameObject.FindGameObjectWithTag("Player").transform.position - this.transform.position);
+}
+```
 ## The Accuracy
 I use [Omni](https://www.omnicalculator.com/physics/sun-angle) to check the output of my calculations.
 The results should not vary too much.
