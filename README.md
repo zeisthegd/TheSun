@@ -3,13 +3,11 @@
 ## The Features
 1. Input Latitude, Longitude, Date then Press [Calcualte](#) to get the output data.
 2. Press [Random](#) to generate and calculate a random Sun Data.
-3. Press [Day Cicle](#) to simulate the Sun's position from 0am to 12pm in the same input date. 
+3. Press [Day Cicle](#) to simulate the Sun's position from 0am to 11pm in the same input date. 
 
 
 ## The Installation
-You can choose to open the program in 2 ways.
-1. Launch the program directly on web using [itch](itch.io) to install foobar.
-2. If you want to download an .exe file, access [itch](itch.io), scroll down and find the Download Now button. Then, download the program files, extract, and run the program.
+To download the program, access [itch](https://penwyn.itch.io/the-sun), scroll down and find the Download Now button. Then, download the program files, extract, and run the program.
 
 ## The Input And Output
 ### The Input

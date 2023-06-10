@@ -23,6 +23,9 @@ namespace Penwyn.TheSun
 
         public SunData() { }
 
+        /// <summary>
+        /// Calculate all output.
+        /// </summary>
         public void ComputeOutputData()
         {
             DeclinationAngle = GetDeclinationAngle();
@@ -31,11 +34,17 @@ namespace Penwyn.TheSun
             ShadowLength = GetShadowLength();
         }
 
+        /// <summary>
+        /// Returns shadow's length based on Sun Angle and Object Height.
+        /// </summary>
         public float GetShadowLength()
         {
             return Mathf.Max(0, ObjectHeight / Mathf.Tan(SunElevationAngle * Mathf.Deg2Rad));
         }
 
+        /// <summary>
+        /// Calculate the Sun's elevation angle. Result is in degrees.
+        /// </summary>
         private float GetElevationAngle()
         {
             float radianLat = Latitude * Mathf.Deg2Rad;
@@ -45,7 +54,7 @@ namespace Penwyn.TheSun
         }
 
         /// <summary>
-        /// Calculate the DeclinationAngle of the Sun. Result is in degree.
+        /// Calculate the DeclinationAngle of the Sun. Result is in degrees.
         /// </summary>
         /// <returns>Declination in Degrees.</returns>
         private float GetDeclinationAngle()
@@ -54,7 +63,7 @@ namespace Penwyn.TheSun
         }
 
         /// <summary>
-        /// Calculate the sun's azimuth angle. Result is in degree.
+        /// Calculate the sun's azimuth angle. Result is in degrees.
         /// </summary>
         private float GetAzimuthAngle()
         {
@@ -70,7 +79,7 @@ namespace Penwyn.TheSun
         #region Date Utility
 
         /// <summary>
-        /// Calculate the HRA using Longitude and Date.  Result is in degree.
+        /// Calculate the HRA using Longitude and Date. Result is in degrees.
         /// </summary>
         private float HourAngle()
         {

@@ -39,7 +39,7 @@ namespace Penwyn.TheSun
 
         private void Start()
         {
-            SetExampleData();
+            SetSunDataToUI();
         }
 
         private void Update()
@@ -47,7 +47,9 @@ namespace Penwyn.TheSun
             DrawDebugRays();
         }
 
-        [ContextMenu("GetDataAndCalculate")]
+        /// <summary>
+        /// Validate input and start the calculation.
+        /// </summary>
         public void GetDataAndCalculate()
         {
             StopAllCoroutines();
@@ -65,13 +67,19 @@ namespace Penwyn.TheSun
             }
         }
 
+        /// <summary>
+        /// Calculate and display output.
+        /// </summary>
         public void CalculateSunData()
         {
             SunData.ComputeOutputData();
             UpdateOutput();
-            MoveSunToAngle();
+            SimulateSunPosition();
         }
 
+        /// <summary>
+        /// Collect the input data from the UI.
+        /// </summary>
         private void GetInputDataFromUI()
         {
             SunData.Date = new System.DateTime(YearInp.text.ToInt(), MonthInp.text.ToInt(), DayInp.text.ToInt(),
@@ -81,6 +89,9 @@ namespace Penwyn.TheSun
             SunData.TimeZone = TimeZoneInp.text.ToInt();
         }
 
+        /// <summary>
+        /// Display the output to UI.
+        /// </summary>
         public void UpdateOutput()
         {
             SunAngleTxt.SetText(SunData.SunElevationAngle.ToString("#0.0000" + "\u00B0"));
@@ -88,7 +99,10 @@ namespace Penwyn.TheSun
             ShadowLengthTxt.SetText(SunData.ShadowLength.ToString("#0.00") + "m");
         }
 
-        public void MoveSunToAngle()
+        /// <summary>
+        /// Simulate the Sun's position and rotation based on the calculations.
+        /// </summary>
+        public void SimulateSunPosition()
         {
             Vector3 sunPos = Quaternion.AngleAxis(SunData.SunElevationAngle, Vector3.forward) * Vector3.right * SunObjectDistance;
             Vector2 positionOnPlane = new Vector2(Mathf.Sin(SunData.AzimuthAngle * Mathf.Deg2Rad), Mathf.Cos(SunData.AzimuthAngle * Mathf.Deg2Rad)).normalized * SunObjectDistance;
@@ -99,6 +113,9 @@ namespace Penwyn.TheSun
             this.transform.forward = (GameObject.FindGameObjectWithTag("Player").transform.position - this.transform.position);
         }
 
+        /// <summary>
+        /// Generate a random SunData and calculate it.
+        /// </summary>
         public void CalculateRandomData()
         {
             StopAllCoroutines();
@@ -106,10 +123,13 @@ namespace Penwyn.TheSun
             SunData.Longitude = Randomizer.Range(-180f, 180f);
             SunData.TimeZone = Randomizer.Range(-12, 14);
             SunData.Date = DateHelper.RandomDate();
-            SetExampleData();
+            SetSunDataToUI();
             CalculateSunData();
         }
 
+        /// <summary>
+        /// Simulate the sun's angle and position from 0h to 23h.
+        /// </summary>
         public void StartDayCircle()
         {
             StopAllCoroutines();
@@ -121,13 +141,16 @@ namespace Penwyn.TheSun
             SunData.Date = SunData.Date.AddHours(-SunData.Date.Hour);
             for (int i = 0; i < 24; i++)
             {
-                SetExampleData();
+                SetSunDataToUI();
                 CalculateSunData();
                 yield return new WaitForSeconds(1);
                 SunData.Date = SunData.Date.AddHours(1);
             }
         }
 
+        /// <summary>
+        /// Draw some debug rays.
+        /// </summary>
         private void DrawDebugRays()
         {
             Debug.DrawRay(ObserverObject.transform.position, this.transform.position - ObserverObject.transform.position, Color.black);
@@ -137,7 +160,10 @@ namespace Penwyn.TheSun
 
         }
 
-        private void SetExampleData()
+        /// <summary>
+        /// Set data to UI.
+        /// </summary>
+        private void SetSunDataToUI()
         {
             LatitudeInp.text = SunData.Latitude + "";
             LongitudeInp.text = SunData.Longitude + "";
@@ -153,6 +179,9 @@ namespace Penwyn.TheSun
 
         #region Date Time Utility
 
+        /// <summary>
+        /// Check if the input date is valid or not.
+        /// </summary>
         private bool IsInputDateValid()
         {
             if (DateHelper.IsDateValid(YearInp.text.ToInt(), MonthInp.text.ToInt(), DayInp.text.ToInt(),
@@ -164,6 +193,10 @@ namespace Penwyn.TheSun
             return false;
         }
 
+        /// <summary>
+        /// Check if the input coordinate is valid or not. 
+        /// Latitude must range from -90 to 90. Longitude must range from -180 to 180.
+        /// </summary>
         private bool IsCoordinateValid()
         {
             if (-90 > LatitudeInp.text.ToFloat() || LatitudeInp.text.ToFloat() > 90
@@ -179,6 +212,10 @@ namespace Penwyn.TheSun
         #endregion
 
         #region Other Utility
+        /// <summary>
+        /// Check if all input field is present in the inspector.
+        /// </summary>
+        /// <returns></returns>
         private bool AllInputFieldsArePresent()
         {
             return LatitudeInp != null && LongitudeInp != null &&
